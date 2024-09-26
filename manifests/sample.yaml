@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: my-app-container
-        image: dockerfile:1  # Updated with the specified Docker image
+        image: dockerfile:latest  
         ports:
         - containerPort: 8080
 ---
