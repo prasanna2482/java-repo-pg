@@ -1,1 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-app-pari
+spec:
+  source:
+    repoURL: 'https://github.com/parinithaopsera456/java-repo-pg.git'
+    path: 'sample'   # Update this if necessary to point to a valid directory in your repo
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: 'samnamespcpari'
 
