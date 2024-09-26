@@ -1,13 +1,45 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: argo-app-pari
+# spec:
+#   source:
+#     repoURL: 'https://github.com/parinithaopsera456/java-repo-pg.git'
+#     path: 'sample'   # Update this if necessary to point to a valid directory in your repo
+#     targetRevision: HEAD
+#   destination:
+#     server: 'https://kubernetes.default.svc'
+#     namespace: 'samnamespcpari'
+
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: argo-app-pari
+  name: my-app
 spec:
-  source:
-    repoURL: 'https://github.com/parinithaopsera456/java-repo-pg.git'
-    path: 'sample'   # Update this if necessary to point to a valid directory in your repo
-    targetRevision: HEAD
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: 'samnamespcpari'
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: dockerfile:1  # Updated with the specified Docker image
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+spec:
+  selector:
+    app: my-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
 
