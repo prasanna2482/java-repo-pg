@@ -38,12 +38,8 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      # Optional: Upload test results or build artifacts if necessary
-      - name: Archive build artifacts
-        if: success()
+      - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: java-build
-          path: target/
-
-  # Add a second job for deployment or other tasks as necessary
+          path: target/*.jar 
