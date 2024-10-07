@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: my-app-container
-        image: 8083-nexus-tecdmwng.ldapowner.opsera.io/test-repo-pari/dockerfile:17
+        image: 8083-nexus-tecdmwng.ldapowner.opsera.io/test-repo-pari/dockerfile:latest
         ports:
         - containerPort: 8080
 ---
