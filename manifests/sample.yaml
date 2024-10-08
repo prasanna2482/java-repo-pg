@@ -42,22 +42,21 @@
 #   - protocol: TCP
 #     port: 80
 #     targetPort: 8080
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: myapp456  # Changed from my-app to myapp456
   # Optional: Specify the namespace if not managed by Argo CD's Application spec
   # namespace: samnamespcpari
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my-app
+      app: myapp456  # Changed from my-app to myapp456
   template:
     metadata:
       labels:
-        app: my-app
+        app: myapp456  # Changed from my-app to myapp456
     spec:
       # If your ECR repository is private, ensure you have imagePullSecrets configured
       # Uncomment and update the following lines if necessary
@@ -66,7 +65,7 @@ spec:
       containers:
       - name: my-app-container
         # Updated image field to reference the ECR image
-        image: 792373136340.dkr.ecr.us-east-1.amazonaws.com/nlpecrnew:1
+        image: 792373136340.dkr.ecr.us-east-1.amazonaws.com/nlpecrnew:latest
         ports:
         - containerPort: 8080
         resources:
@@ -88,5 +87,3 @@ spec:
             port: 8080
           initialDelaySeconds: 5
           periodSeconds: 10
-
-
