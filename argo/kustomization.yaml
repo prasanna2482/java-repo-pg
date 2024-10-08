@@ -17,7 +17,7 @@ resources:
       template:
         metadata:
           labels:
-            app: myapp4kusom56
+            app: myappkustom456  # Ensure this matches the service selector
         spec:
           containers:
           - name: my-app-container
@@ -50,7 +50,7 @@ resources:
       name: my-app-service
     spec:
       selector:
-        app: myappkustom456
+        app: myappkustom456  # Ensure this matches the deployment labels
       ports:
       - protocol: TCP
         port: 80
