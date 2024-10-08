@@ -1,20 +1,54 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
+# # apiVersion: argoproj.io/v1alpha1
+# # kind: Application
+# # metadata:
+# #   name: argo-app-pari
+# # spec:
+# #   source:
+# #     repoURL: 'https://github.com/parinithaopsera456/java-repo-pg.git'
+# #     path: 'sample'   # Update this if necessary to point to a valid directory in your repo
+# #     targetRevision: HEAD
+# #   destination:
+# #     server: 'https://kubernetes.default.svc'
+# #     namespace: 'samnamespcpari'
+
+# apiVersion: apps/v1
+# kind: Deployment
 # metadata:
-#   name: argo-app-pari
+#   name: my-app
 # spec:
-#   source:
-#     repoURL: 'https://github.com/parinithaopsera456/java-repo-pg.git'
-#     path: 'sample'   # Update this if necessary to point to a valid directory in your repo
-#     targetRevision: HEAD
-#   destination:
-#     server: 'https://kubernetes.default.svc'
-#     namespace: 'samnamespcpari'
+#   replicas: 2
+#   selector:
+#     matchLabels:
+#       app: my-app
+#   template:
+#     metadata:
+#       labels:
+#         app: my-app
+#     spec:
+#       containers:
+#       - name: my-app-container
+#         image: 792373136340.dkr.ecr.us-west-1.amazonaws.com/nlpecrnew:finaltag
+#         ports:
+#         - containerPort: 8080
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: my-app-service
+# spec:
+#   selector:
+#     app: my-app
+#   ports:
+#   - protocol: TCP
+#     port: 80
+#     targetPort: 8080
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-app
+  # Optional: Specify the namespace if not managed by Argo CD's Application spec
+  # namespace: samnamespcpari
 spec:
   replicas: 2
   selector:
@@ -25,21 +59,34 @@ spec:
       labels:
         app: my-app
     spec:
+      # If your ECR repository is private, ensure you have imagePullSecrets configured
+      # Uncomment and update the following lines if necessary
+      # imagePullSecrets:
+      # - name: ecr-registry-secret
       containers:
       - name: my-app-container
-        image: 792373136340.dkr.ecr.us-west-1.amazonaws.com/nlpecrnew:finaltag
+        # Updated image field to reference the ECR image
+        image: 792373136340.dkr.ecr.us-east-1.amazonaws.com/nlpecrnew:1
         ports:
         - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-app-service
-spec:
-  selector:
-    app: my-app
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 8080
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
 
