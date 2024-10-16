@@ -12,4 +12,4 @@ jobs:
 
       - name: Echo Inputs
         run: |
-          echo "Name: from main branch"
+          echo "Name: from dev2 branch"
