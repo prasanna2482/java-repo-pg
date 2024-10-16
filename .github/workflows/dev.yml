@@ -1,12 +1,15 @@
 name: dev echo yaml
+
 on:
   workflow_dispatch:
+
 jobs:
   echo-parameters:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: Echo Inputs
-      run: |
-        echo "Name: from dev branch"
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Echo Inputs
+        run: |
+          echo "Name: from dev branch"
