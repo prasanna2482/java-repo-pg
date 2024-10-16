@@ -2,6 +2,12 @@ name: main echo yaml
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   echo-parameters:
@@ -10,6 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Echo Inputs
+      - name: Verify Branch for Manual Trigger
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
-          echo "Name: from main branch"
+          if [ "${GITHUB_REF}" != "refs/heads/main" ]; then
+            echo "This workflow can only be run on the 'main' branch."
+            exit 1
