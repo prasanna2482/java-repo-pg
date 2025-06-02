@@ -1,3 +1,4 @@
+ARG APP_NAME=hello-1.0.jar
 # Use an official Maven image that includes OpenJDK
 FROM maven:3.8.4-openjdk-11-slim AS build
 
@@ -18,7 +19,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copy the built application from the build stage
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/*.jar ${APP_NAME}.jar
 
 # Command to run the application
 CMD ["java", "-jar", "app.jar"]
