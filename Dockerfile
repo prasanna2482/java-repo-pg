@@ -1,7 +1,8 @@
 # Use an official Maven image that includes OpenJDK
-ARG ver = 3.9.6
+ARG ver=3.9.6
 FROM maven:${ver}-openjdk-11-slim AS build
-
+ARG APP_NAME="hello"
+RUN echo "App: $APP_NAME"
 # Set the working directory inside the container
 WORKDIR /app
 
