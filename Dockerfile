@@ -1,7 +1,8 @@
-ARG APP_NAME="hello-1.0.jar"
 # Use an official Maven image that includes OpenJDK
-RUN echo "App: $APP_NAME"
 FROM maven:3.8.4-openjdk-11-slim AS build
+
+ARG APP_NAME="hello-1.0.jar"
+RUN echo "App: $APP_NAME"
 
 # Set the working directory inside the container
 WORKDIR /app
