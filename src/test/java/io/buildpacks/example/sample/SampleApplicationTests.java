@@ -12,5 +12,10 @@ public class SampleApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
+	@Test
+	public void mainMethodRuns() {
+		SampleApplication.main(new String[]{});
+	}
 
 }
+
